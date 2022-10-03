@@ -15,44 +15,37 @@ class TopRatedComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<MoviesBloc,MoviesState>(
-      buildWhen: (previous, current) => previous.topRatedState != current.topRatedState,
-
+    return BlocConsumer<MovieCubit, MovieState>(
+      listener: (context, state) {},
       builder: (context, state) {
-        switch(state.topRatedState) {
-          case RequestState.loading:
-            return const SizedBox(
-              height: 170,
-              child: Center(child: CircularProgressIndicator()),
-            );
+        final cubit = MovieCubit.get(context);
 
-          case RequestState.loaded:
-            return FadeIn(
-              duration: const Duration(milliseconds: 500),
-              child: SizedBox(
-                height: 170.0,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  itemCount: state.topRatedMovies.length,
-                  itemBuilder: (context, index) {
-                    final movie = state.topRatedMovies[index];
-                    return Container(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: InkWell(
-                        onTap: () {
-
-                        },
-                        child: ClipRRect(
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(8.0)),
-                          child: CachedNetworkImage(
-                            width: 120.0,
-                            fit: BoxFit.cover,
-                            imageUrl: ApiConstance.imageUrl(movie.backdropPath),
-                            placeholder: (context, url) =>
-                                Shimmer.fromColors(
+        return FadeIn(
+            duration: const Duration(milliseconds: 500),
+            child: (cubit.movieTopRated != null)
+                ? SizedBox(
+                    height: 170.0,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      itemCount: cubit.movieTopRated!.length,
+                      itemBuilder: (context, index) {
+                        final movie = cubit.movieTopRated![index];
+                        return Container(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: InkWell(
+                            onTap: () {},
+                            child: ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8.0)),
+                              child: CachedNetworkImage(
+                                width: 120.0,
+                                fit: BoxFit.cover,
+                                imageUrl:
+                                    ApiConstance.imageUrl(movie!.backdropPath),
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
                                   baseColor: Colors.grey[850]!,
                                   highlightColor: Colors.grey[800]!,
                                   child: Container(
@@ -64,26 +57,20 @@ class TopRatedComponent extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                            errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            );
-
-          case RequestState.error:
-            return SizedBox(
-              height: 170,
-              child: Text(state.topRatedMessage),
-            );
-        }},
+                        );
+                      },
+                    ),
+                  )
+                : const SizedBox(
+                    height: 170,
+                    child: Center(child: CircularProgressIndicator()),
+                  ));
+      },
     );
-
-
-
   }
 }

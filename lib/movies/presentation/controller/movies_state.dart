@@ -1,65 +1,32 @@
-import 'package:equatable/equatable.dart';
-import '../../../core/utils/enums.dart';
-import '../../domain/entities/movies.dart';
 
-class MoviesState extends Equatable {
-  final List<Movie> nowPlayingMovies;
-  final RequestState nowPlayingState;
-  final String nowPlayingMessage;
-  final List<Movie> popularMovies;
-  final RequestState popularState;
-  final String popularMessage;
-  final List<Movie> topRatedMovies;
-  final RequestState topRatedState;
-  final String topRatedMessage;
+abstract class MovieState {}
 
-  const MoviesState(
-      {this.nowPlayingMovies = const [],
-      this.nowPlayingState = RequestState.loading,
-      this.nowPlayingMessage = '',
-      this.popularMovies = const [],
-      this.popularState = RequestState.loading,
-      this.popularMessage = '',
-      this.topRatedMovies = const [],
-      this.topRatedState = RequestState.loading,
-      this.topRatedMessage = ''});
+class MovieInitial extends MovieState {}
 
-  MoviesState copyWith(
-  {
-     List<Movie>? nowPlayingMovies,
-     RequestState? nowPlayingState,
-     String? nowPlayingMessage,
-     List<Movie>? popularMovies,
-     RequestState? popularState,
-     String? popularMessage,
-     List<Movie>? topRatedMovies,
-     RequestState? topRatedState,
-     String? topRatedMessage,
-}
-      ){
-    return MoviesState(
-      nowPlayingMovies: nowPlayingMovies?? this.nowPlayingMovies,
-        nowPlayingState: nowPlayingState?? this.nowPlayingState,
-      nowPlayingMessage: nowPlayingMessage?? this.nowPlayingMessage,
-      popularMovies: popularMovies?? this.popularMovies,
-      popularState: popularState?? this.popularState,
-      popularMessage: popularMessage?? this.popularMessage,
-      topRatedMovies: topRatedMovies?? this.topRatedMovies,
-      topRatedState: topRatedState?? this.topRatedState,
-      topRatedMessage: topRatedMessage?? this.topRatedMessage,
-    );
-}
+class GetMoviesLoadingState extends MovieState{}
+class GetMoviesErrorState extends MovieState{}
+class GetMoviesSuccessState extends MovieState{}
 
-  @override
-  List<Object?> get props => [
-        nowPlayingMovies,
-        nowPlayingState,
-        nowPlayingMessage,
-        popularMovies,
-        popularState,
-        popularMessage,
-    topRatedMovies,
-    topRatedState,
-    topRatedMessage
-      ];
-}
+class GetPopularMoviesLoadingState extends MovieState{}
+class GetPopularMoviesErrorState extends MovieState{}
+class GetPopularMoviesSuccessState extends MovieState{}
+
+
+
+class GetTopRatedMoviesLoadingState extends MovieState{}
+class GetTopRatedMoviesErrorState extends MovieState{}
+class GetTopRatedMoviesSuccessState extends MovieState{}
+
+
+
+class GetMoviesDetailsLoadingState extends MovieState{}
+class GetMoviesDetailsErrorState extends MovieState{}
+class GetMoviesDetailsSuccessState extends MovieState{}
+
+
+class GetRecommendationMoviesDetailsLoadingState extends MovieState{}
+class GetRecommendationMoviesDetailsErrorState extends MovieState{}
+class GetRecommendationMoviesDetailsSuccessState extends MovieState{}
+
+
+

@@ -1,5 +1,7 @@
 
 import 'package:get_it/get_it.dart';
+import 'package:movie/movies/domain/usecases/get_movie_details_use_case.dart';
+import 'package:movie/movies/domain/usecases/get_recommendation_use_case.dart';
 import '../../movies/data/datasource/movie_remote_data_source.dart';
 import '../../movies/data/repository/movies_repository.dart';
 import '../../movies/domain/repository/base_movies_repository.dart';
@@ -13,11 +15,13 @@ class ServiceLocator{
   void init(){
 
 ///bloc
-sl.registerFactory(() => MoviesBloc(sl(),sl(),sl()));
+sl.registerFactory(() => MovieCubit(sl(),sl(),sl(),sl(),sl()),);
     /// Use Case
 sl.registerLazySingleton(() => GetNowPlayingMoviesUseCase(sl()));
 sl.registerLazySingleton(() => GetPopularMoviesUseCase(sl()));
 sl.registerLazySingleton(() => GetTopRatedMoviesUseCase(sl()));
+sl.registerLazySingleton(() => GetMovieDetailsUseCase(sl()));
+sl.registerLazySingleton(() => GetRecommendationUseCase(sl()));
     /// Repository
     sl.registerLazySingleton<BaseMoviesRepository>(() => MoviesRepository(sl()));
     /// Data Source
