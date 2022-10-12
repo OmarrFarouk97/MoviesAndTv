@@ -5,8 +5,10 @@ import 'package:movie/movies/presentation/controller/movies_bloc.dart';
 import 'core/services/services_locator.dart';
 import 'movies/presentation/screens/movies_screen.dart';
 
-void main() {
+void main()async {
   ServiceLocator().init();
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
@@ -15,14 +17,15 @@ class MyApp extends StatelessWidget {
 
   ({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MovieCubit(sl(),sl(),sl(),sl(),sl())..getNowPlayingMovies()..getPopularMovies()..getTopRatedMovies(),
-      child: const MaterialApp(
+      child:  MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MoviesScreen(),
+
+        theme:ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.grey.shade900,),
+        home:const MoviesScreen(),
       ),
     );
   }

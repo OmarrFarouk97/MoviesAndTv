@@ -9,6 +9,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../core/network/api_constance.dart';
 import '../../../core/utils/enums.dart';
 import '../controller/movies_bloc.dart';
+import '../screens/movie_details_screen.dart';
 
 class TopRatedComponent extends StatelessWidget {
   const TopRatedComponent({Key? key}) : super(key: key);
@@ -35,7 +36,12 @@ class TopRatedComponent extends StatelessWidget {
                         return Container(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              cubit.getMoviesDetails(movie.id);
+                              cubit.getRecommendationMovies(movie.id);
+                              Navigator.of(context).push( MaterialPageRoute(builder: (context) => MovieDetailContent(id: movie.id)));
+
+                            },
                             child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(8.0)),

@@ -17,7 +17,6 @@ class MoviesScreen extends StatelessWidget {
       listener: (context, state) {},
       builder:  (context, state) {
         return Scaffold(
-          backgroundColor: Colors.grey.shade900,
           body: SingleChildScrollView(
             key: const Key('movieScrollView'),
             child: Column(

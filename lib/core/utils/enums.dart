@@ -1,3 +1,3 @@
 enum RequestState{
-  loading,loaded,error
+  loading,loaded,error, isLoaded, isError, isLoading
 }

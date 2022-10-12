@@ -6,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../core/network/api_constance.dart';
 import '../controller/movies_bloc.dart';
 import '../controller/movies_state.dart';
+import '../screens/movie_details_screen.dart';
 
 class PopularComponent extends StatelessWidget {
   const PopularComponent({Key? key}) : super(key: key);
@@ -33,7 +34,9 @@ class PopularComponent extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 8.0),
                           child: InkWell(
                             onTap: () {
-                              /// TODO : NAVIGATE TO  MOVIE DETAILS
+                              cubit.getMoviesDetails(movie.id);
+                              cubit.getRecommendationMovies(movie.id);
+                              Navigator.of(context).push( MaterialPageRoute(builder: (context) => MovieDetailContent(id: movie.id)));
                             },
                             child: ClipRRect(
                               borderRadius:
