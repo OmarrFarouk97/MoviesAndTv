@@ -7,12 +7,11 @@ import 'package:movie/movies/presentation/controller/movies_bloc.dart';
 import 'package:movie/movies/presentation/controller/movies_state.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../core/network/api_constance.dart';
-
 import '../../../core/utils/app_string.dart';
-import '../../domain/entities/geners.dart';
 
 class MovieDetailContent extends StatelessWidget {
   final int id;
+
   const MovieDetailContent({Key? key, required this.id}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class MovieDetailContent extends StatelessWidget {
                     slivers: [
                       SliverAppBar(
                         backgroundColor: Colors.transparent,
-                        pinned: true,
+                        pinned: false,
                         expandedHeight: 250.0,
                         flexibleSpace: FlexibleSpaceBar(
                           background: FadeIn(
@@ -163,15 +162,43 @@ class MovieDetailContent extends StatelessWidget {
                                           ),
                                         ),
                                         const SizedBox(height: 8.0),
-                                        Text(
-                                          '${AppString.genres}: ${_showGenres(cubit.movieDetail!.genres)}',
-                                          style: const TextStyle(
-                                            color: Colors.white60,
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.bold,
-                                            letterSpacing: 1.2,
+                                        SizedBox(
+                                          height: 30,
+                                          child: ListView.separated(
+                                            padding: const EdgeInsets.symmetric(horizontal: 2),
+                                            scrollDirection: Axis.horizontal,
+                                            itemBuilder: (context,index){
+                                              return Container(
+                                                color: Colors.grey.withOpacity(0.1),
+                                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                                                child: Center(
+                                                  child: Text(
+
+
+                                                    cubit.movieDetail!.genres[index].name,
+                                                    style: const TextStyle(
+                                                      color: Colors.grey,
+                                                    ),
+
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            itemCount: cubit.movieDetail!.genres.length,
+                                            separatorBuilder: (context,state)=>const SizedBox(width: 10,),
                                           ),
                                         ),
+
+
+                                        // Text(
+                                        //   '${AppString.genres}: ${_showGenres(cubit.movieDetail!.genres)}',
+                                        //   style: const TextStyle(
+                                        //     color: Colors.white60,
+                                        //     fontSize: 16.0,
+                                        //     fontWeight: FontWeight.bold,
+                                        //     letterSpacing: 1.2,
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   )
@@ -213,18 +240,18 @@ class MovieDetailContent extends StatelessWidget {
     );
   }
 
-  String _showGenres(List<Genres> genres) {
-    String result = '';
-    for (var genre in genres) {
-      result += '${genre.name}, ';
-    }
-
-    if (result.isEmpty) {
-      return result;
-    }
-
-    return result.substring(0, result.length - 2);
-  }
+  // String _showGenres(List<Genres> genres) {
+  //   String result = '';
+  //   for (var genre in genres) {
+  //     result += '${genre.name}, ';
+  //   }
+  //
+  //   if (result.isEmpty) {
+  //     return result;
+  //   }
+  //
+  //   return result.substring(0, result.length - 2);
+  // }
 
   String _showDuration(int runtime) {
     final int hours = runtime ~/ 60;
@@ -245,8 +272,7 @@ class MovieDetailContent extends StatelessWidget {
 
           return
             (cubit.recommendation != null)
-                ?
-            SliverGrid(
+                ? SliverGrid(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final recommendation = cubit.recommendation![index];
@@ -294,9 +320,8 @@ class MovieDetailContent extends StatelessWidget {
               crossAxisCount: 3,
             ),
           )
-          : const SizedBox(
-          child: Center(
-          child: CircularProgressIndicator(),
+                : const SizedBox(child: Center(child: CircularProgressIndicator(),
+
           ),
           );
         });
